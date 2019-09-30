@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  min-height: 100vh;
+  min-width: 100vh;
+  margin: 0;
+  background-image: url("./assets/img/bckg.jpg");
+  background-size: contain;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.submit-button {
+  background-color: transparent;
+  border: 3px solid black;
+}

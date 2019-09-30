@@ -1,0 +1,22 @@
+.input-wrapper {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.name-field {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  appearance: none;
+  border: none;
+  border-bottom: 2px solid black;
+  &:focus {
+    border-bottom: 3px solid black;
+    outline: none;
+
+  }
+}
