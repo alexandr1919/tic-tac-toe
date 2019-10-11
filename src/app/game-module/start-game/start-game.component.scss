@@ -1,6 +1,7 @@
-.input-wrapper {
+.form {
   width: 50%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin: 0 auto;
   padding: 20px;
@@ -17,6 +18,14 @@
   &:focus {
     border-bottom: 3px solid black;
     outline: none;
-
+    margin-top: -10px;
   }
+}
+
+.submit-button {
+  margin: 10px auto;
+}
+
+.warning {
+  color: red;
 }

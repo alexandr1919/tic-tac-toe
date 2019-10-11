@@ -15,7 +15,15 @@ body {
   padding: 40px 0;
 }
 
-.submit-button {
+.button {
+  cursor: pointer;
   background-color: transparent;
   border: 3px solid black;
+  &:active {
+    opacity: 0.5;
+  }
+  &:hover, &:focus {
+    background-color: black;
+    color: #ffffff;
+  }
 }

@@ -1,3 +1,6 @@
+import { createReducer, on } from '@ngrx/store';
+import { startGame, finishGame } from './app.actions';
+
 export interface State {
   firstPlayer: {
     name: string,
@@ -21,3 +24,13 @@ const initialState = {
   },
   isOngoingGame: false
 };
+
+const _appReducer = createReducer(initialState,
+  on(startGame, state => ({
+    ...state,
+    isOngoingGame: true
+  })));
+
+export function appReducer(state, action) {
+  return _appReducer(state, action);
+}
