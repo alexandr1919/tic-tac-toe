@@ -16,11 +16,11 @@ export interface State {
 const initialState = {
   firstPlayer: {
     name: '',
-    score: 0
+    score: 1
   },
   secondPlayer: {
     name: '',
-    score: 0
+    score: 2
   },
   isOngoingGame: false
 };

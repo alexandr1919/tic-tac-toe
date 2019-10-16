@@ -1,6 +1,7 @@
-<div>
+<div *ngIf="isOngoingGame">
   (player) (player)
-  (score)   (score)
+  {{firstPlayer?.score}}  {{secondPlayer?.score}}
+  <div>{{this.store$ | async}}</div>
 
 </div>
 <app-start-game></app-start-game>
