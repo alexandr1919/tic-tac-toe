@@ -19,8 +19,12 @@ export class StartGameComponent implements OnInit {
 
   setNames() {
     this.isSubmitted = true;
+    console.log(this.startgameForm)
     if (this.startgameForm.valid) {
-      this.store.dispatch(startGame());
+      this.store.dispatch(startGame({
+        firstPlayerName: this.startgameForm.value.firstPlayer,
+        secondPlayerName: this.startgameForm.value.secondPlayer
+      }));
     }
   }
 

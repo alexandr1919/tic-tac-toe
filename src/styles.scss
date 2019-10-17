@@ -1,4 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/assets/fonts/roboto/Roboto-Regular.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/src/assets/fonts/roboto/Roboto-Bold.ttf") format("ttf");
+  font-weight: bold;
+}
+
 body {
   min-height: 100vh;
   min-width: 100vh;
@@ -6,6 +16,7 @@ body {
   background-image: url("./assets/img/bckg.jpg");
   background-size: contain;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 .wrapper {

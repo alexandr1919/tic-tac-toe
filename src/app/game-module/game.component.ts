@@ -30,7 +30,9 @@ export class GameComponent implements OnInit {
       this.isOngoingGame = res.app.isOngoingGame;
       this.firstPlayer.score = res.app.firstPlayer.score;
       this.secondPlayer.score = res.app.secondPlayer.score;
-      console.log(this.firstPlayer);
+      this.firstPlayer.name = res.app.firstPlayer.name;
+      this.secondPlayer.name = res.app.secondPlayer.name;
+      console.log(res);
     });
 
 

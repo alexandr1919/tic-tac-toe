@@ -16,18 +16,25 @@ export interface State {
 const initialState = {
   firstPlayer: {
     name: '',
-    score: 1
+    score: 0
   },
   secondPlayer: {
     name: '',
-    score: 2
+    score: 0
   },
   isOngoingGame: false
 };
 
 const _appReducer = createReducer(initialState,
-  on(startGame, state => ({
-    ...state,
+  on(startGame, (state, props) => ({
+    firstPlayer: {
+      name: props.firstPlayerName,
+      score: 0
+    },
+    secondPlayer: {
+      name: props.secondPlayerName,
+      score: 0
+    },
     isOngoingGame: true
   })));
 
