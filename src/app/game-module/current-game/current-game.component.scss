@@ -1,0 +1,39 @@
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+  margin: 0 auto;
+  transform: skew(-6deg);
+}
+
+.cell {
+  flex-basis: 33%;
+  padding: 50px 0;
+  &--1 {
+    border-bottom: 2px solid #000;
+  }
+  &--2 {
+    border: 2px solid #000;
+    border-top: none;
+  }
+  &--3 {
+     border-bottom: 2px solid #000;
+  }
+  &--4 {
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+  }
+  &--5 {
+    border-bottom: 2px solid #000;
+  }
+  &--6 {
+     border-left: 2px solid #000;
+     border-bottom: 2px solid #000;
+   }
+
+  &--8 {
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+  }
+
+}
