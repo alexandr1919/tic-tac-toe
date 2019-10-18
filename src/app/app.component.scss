@@ -1,0 +1,10 @@
+.github-icon {
+  position: absolute;
+  right: 50px;
+  top: 50px;
+  width: 40px;
+  height: 40px;
+  &:hover {
+    fill: crimson;
+  }
+}
