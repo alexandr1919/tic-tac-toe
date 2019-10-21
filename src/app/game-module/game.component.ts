@@ -26,6 +26,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
+    // fix
     this.store.subscribe((res) => {
       this.isOngoingGame = res.app.isOngoingGame;
       this.firstPlayer.score = res.app.firstPlayer.score;
