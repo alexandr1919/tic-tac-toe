@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import * as  fromApp from '../../app.reducer';
+import * as  fromRoot from '../../app.reducer';
 import { startGame } from '../../app.actions';
 
 @Component({
@@ -19,7 +19,6 @@ export class StartGameComponent implements OnInit {
 
   setNames() {
     this.isSubmitted = true;
-    console.log(this.startgameForm)
     if (this.startgameForm.valid) {
       this.store.dispatch(startGame({
         firstPlayerName: this.startgameForm.value.firstPlayer,
@@ -28,7 +27,7 @@ export class StartGameComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder, private store: Store<{app: fromApp.State}>) { }
+  constructor(private fb: FormBuilder, private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
   }

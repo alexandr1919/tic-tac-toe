@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-current-game',
@@ -6,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./current-game.component.scss']
 })
 export class CurrentGameComponent implements OnInit {
+  isOngoingGame$: Observable<boolean>;
 
-  constructor() { }
+  constructor(private store: Store<fromRoot.State> ) { }
 
   ngOnInit() {
+    this.isOngoingGame$ = this.store.select(fromRoot.getGameState);
   }
 
 }

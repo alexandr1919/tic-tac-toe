@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameModule } from './game-module/game.module';
 
-import { appReducer } from './app.reducer';
+import { reducers } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { appReducer } from './app.reducer';
     AppRoutingModule,
     GameModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({app: appReducer })
+    StoreModule.forRoot(reducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

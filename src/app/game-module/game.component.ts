@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import * as fromApp from '../app.reducer';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../app.reducer';
 import { Observable } from 'rxjs';
-import { Player } from '../shared/interfaces';
+import { Player, PlayersData } from '../shared/interfaces';
 
 @Component({
   selector: 'app-game',
@@ -10,8 +10,8 @@ import { Player } from '../shared/interfaces';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  store$: Observable<boolean>;
-  isOngoingGame = false;
+  isOngoingGame$: Observable<boolean>;
+  playersData$: Observable<PlayersData>;
   firstPlayer: Player = {
     score: 0,
     name: ''
@@ -22,21 +22,15 @@ export class GameComponent implements OnInit {
   };
 
 
-  constructor(private store: Store<{app: fromApp.State}>) {
+  constructor(private store: Store<fromRoot.State>) {
   }
 
   ngOnInit() {
-    // fix
-    this.store.subscribe((res) => {
-      this.isOngoingGame = res.app.isOngoingGame;
-      this.firstPlayer.score = res.app.firstPlayer.score;
-      this.secondPlayer.score = res.app.secondPlayer.score;
-      this.firstPlayer.name = res.app.firstPlayer.name;
-      this.secondPlayer.name = res.app.secondPlayer.name;
-      console.log(res);
+    this.isOngoingGame$ = this.store.select(fromRoot.getGameState);
+    this.playersData$ = this.store.select(fromRoot.getPlayersData);
+    this.playersData$.subscribe((res) => {
+      this.firstPlayer = res.firstPlayer;
+      this.secondPlayer = res.secondPlayer;
     });
-
-
   }
-
 }
