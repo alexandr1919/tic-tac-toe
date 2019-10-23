@@ -14,8 +14,10 @@ export const reducers: ActionReducerMap<State> = {
 };
 
 export const getBaseState = createFeatureSelector<fromBase.State>('base');
-export const getGameState = createFeatureSelector<fromBase.State>('game');
+export const getGameState = createFeatureSelector<fromGame.State>('game');
 
 export const getBaseGameState = createSelector(getBaseState, fromBase.getGameState);
 export const getPlayersData = createSelector(getBaseState, fromBase.getPlayersData);
 
+export const getTurn = createSelector(getGameState, fromGame.getTurn);
+export const getCrossRole = createSelector(getGameState, fromGame.getCrossRole);
