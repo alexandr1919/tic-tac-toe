@@ -8,6 +8,7 @@
     <span class="player-score">{{secondPlayer.score}}</span>
   </div>
 </section>
+
 <app-start-game *ngIf="!(isOngoingGame$ | async)"></app-start-game>
 <app-current-game></app-current-game>
 <app-end-game></app-end-game>

@@ -15,7 +15,11 @@ export class CurrentGameComponent implements OnInit {
   constructor(private store: Store<fromRoot.State> ) { }
 
   ngOnInit() {
-    this.isOngoingGame$ = this.store.select(fromRoot.getGameState);
+    this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
+  }
+
+  shot() {
+    console.log('shooted')
   }
 
 }

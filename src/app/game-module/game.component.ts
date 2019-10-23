@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOngoingGame$ = this.store.select(fromRoot.getGameState);
+    this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => {
       this.firstPlayer = res.firstPlayer;

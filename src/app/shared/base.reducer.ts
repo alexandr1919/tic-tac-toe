@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { startGame } from '../app.actions';
+import { startGame } from './base.actions';
 
 export interface State {
   playersData: {

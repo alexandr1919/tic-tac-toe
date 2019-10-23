@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as  fromRoot from '../../app.reducer';
-import { startGame } from '../../app.actions';
+import { startGame } from '../../shared/base.actions';
 
 @Component({
   selector: 'app-start-game',
