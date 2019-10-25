@@ -10,5 +10,5 @@
 </section>
 
 <app-start-game *ngIf="!(isOngoingGame$ | async)"></app-start-game>
-<app-current-game></app-current-game>
-<app-end-game></app-end-game>
+<app-current-game *ngIf="isOngoingGame$ | async" (finishGame)="finishGame($event)"></app-current-game>
+<app-end-game *ngIf="winner" [winner]="winner"></app-end-game>

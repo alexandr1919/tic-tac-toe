@@ -1,5 +1,9 @@
-<section class="wrapper" *ngIf="isOngoingGame$ | async">
-  <div class="field">
-    <div *ngFor="let cell of cells; let i = index" class="cell cell--{{i + 1}}" (click)="shot(i + 1)"></div>
+<section class="wrapper">
+  <div class="field" [ngClass]="{'game-finished': isGameFinished}">
+    <div
+      *ngFor="let cell of cells; let i = index"
+      class="cell cell--{{i + 1}}"
+      [ngClass]="cellsState[i + 1]"
+      (click)="shot(i + 1)"></div>
   </div>
 </section>

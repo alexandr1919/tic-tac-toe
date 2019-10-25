@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-end-game',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./finish-game.component.scss']
 })
 export class FinishGameComponent implements OnInit {
+  @Input() winner: string;
 
   constructor() { }
 
