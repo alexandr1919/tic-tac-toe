@@ -20,7 +20,7 @@ export class GameComponent implements OnInit {
     score: 0,
     name: ''
   };
-  winner: string;
+  result: string;
 
 
   constructor(private store: Store<fromRoot.State>) {
@@ -36,6 +36,6 @@ export class GameComponent implements OnInit {
   }
 
   finishGame(name: string) {
-    this.winner = name;
+    this.result = name;
   }
 }

@@ -1,3 +1,7 @@
 <section class="wrapper">
-  The winner is {{winner}}
+  <p *ngIf="result === 'draw'; else isWinnerShowed" >Draw</p>
+  <ng-template #isWinnerShowed>
+    The winner is {{result}}
+  </ng-template>
+
 </section>

@@ -24,6 +24,7 @@ export class CurrentGameComponent implements OnInit {
   isFirstPlayerPlayCrosses = true;
   firstPlayerShots: number[] = [];
   secondPlayerShots: number[] = [];
+  shotsCount = 0;
   isGameFinished = false;
   combinations: number[][] = [
     [1, 2, 3],
@@ -56,6 +57,7 @@ export class CurrentGameComponent implements OnInit {
   }
 
   shot(item) {
+    this.shotsCount++;
     if (this.firstPlayerShots.includes(item) || this.secondPlayerShots.includes(item)) return;
     if (this.isFirstPlayerTurn) {
       this.cellsState[item] = 'crossed';
@@ -66,6 +68,7 @@ export class CurrentGameComponent implements OnInit {
       this.secondPlayerShots.push(item);
       this.checkCombination(this.secondPlayerShots);
     }
+    if (this.shotsCount === 9) this.finishGame.emit('draw')
     this.store.dispatch(nextTurn({isFirstPlayerTurn: !this.isFirstPlayerTurn}));
   }
 
@@ -73,9 +76,11 @@ export class CurrentGameComponent implements OnInit {
     for (const item in this.combinations) {
       if (this.combinations[item].every(comb => arr.includes(comb))) {
         this.isGameFinished = true;
-        this.isFirstPlayerTurn ?
-          this.finishGame.emit(this.playersData.firstPlayer.name) :
-          this.finishGame.emit(this.playersData.secondPlayer.name);
+        if (this.isFirstPlayerTurn) {
+          this.finishGame.emit(this.playersData.firstPlayer.name)
+        } else {
+          this.finishGame.emit(this.playersData.secondPlayer.name)
+        }
       }
     }
   }

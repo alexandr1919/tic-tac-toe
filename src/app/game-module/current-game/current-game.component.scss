@@ -52,7 +52,7 @@
     display: block;
     width: 40px;
     height: 10px;
-    transform: rotate(45deg);
+    transform: rotate(45deg) skew(6deg);
     background-color: green;
   }
   &:after {
@@ -63,8 +63,11 @@
     position: absolute;
     width: 40px;
     height: 10px;
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) skew(6deg);
     background-color: green;
+  }
+  &:hover {
+    background-color: transparent;
   }
 }
 
@@ -79,6 +82,10 @@
     height: 20px;
     border: 10px solid red;
     border-radius: 100%;
+    transform: skew(6deg);
+  }
+  &:hover {
+    background-color: transparent;
   }
 }
 
