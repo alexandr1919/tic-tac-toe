@@ -13,6 +13,7 @@ export interface State {
     };
   };
   isOngoingGame: boolean;
+  isWinnerShown: boolean;
 }
 
 const initialState: State = {
@@ -26,7 +27,8 @@ const initialState: State = {
       score: 0
     }
   },
-  isOngoingGame: false
+  isOngoingGame: false,
+  isWinnerShown: false
 };
 
 const reducer = createReducer(initialState,
@@ -41,11 +43,13 @@ const reducer = createReducer(initialState,
         score: 0
       },
     },
-    isOngoingGame: true
+    isOngoingGame: true,
+    isWinnerShown: false
   })),
   on(finishGame, (state, props) => ({
     ...state,
-    ...props
+    ...props,
+    isWinnerShown: true
   })));
 
 export function baseReducer(state, action) {
@@ -53,4 +57,5 @@ export function baseReducer(state, action) {
 }
 
 export const getGameState = (state: State) =>  state.isOngoingGame;
+export const getWinnerState = (state: State) => state.isWinnerShown;
 export const getPlayersData = (state: State) => state.playersData;

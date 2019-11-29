@@ -17,6 +17,7 @@ export const getBaseState = createFeatureSelector<fromBase.State>('base');
 export const getGameState = createFeatureSelector<fromGame.State>('game');
 
 export const getBaseGameState = createSelector(getBaseState, fromBase.getGameState);
+export const getWinnerState = createSelector(getBaseState, fromBase.getWinnerState);
 export const getPlayersData = createSelector(getBaseState, fromBase.getPlayersData);
 
 export const getTurn = createSelector(getGameState, fromGame.getTurn);

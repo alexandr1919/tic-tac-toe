@@ -1,5 +1,5 @@
 <section class="wrapper">
-  <div class="field" [ngClass]="{'game-finished': isGameFinished}">
+  <div class="field" [ngClass]="{'game-finished': isWinnerShown}">
     <div
       *ngFor="let cell of cells; let i = index"
       class="cell cell--{{i + 1}}"

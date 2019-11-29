@@ -18,6 +18,7 @@ export class CurrentGameComponent implements OnInit {
   turn$: Observable<boolean>;
   roles$: Observable<boolean>;
   playersData$: Observable<PlayersData>;
+  isWinnerShown$: Observable<boolean>;
   playersData: PlayersData;
   cells: number[] = [];
   cellsState = {};
@@ -26,7 +27,7 @@ export class CurrentGameComponent implements OnInit {
   firstPlayerShots: number[] = [];
   secondPlayerShots: number[] = [];
   shotsCount = 0;
-  isGameFinished = false;
+  isWinnerShown = false;
   combinations: number[][] = [
     [1, 2, 3],
     [4, 5, 6],
@@ -49,6 +50,8 @@ export class CurrentGameComponent implements OnInit {
     this.turn$.subscribe(res => this.isFirstPlayerTurn = res);
     this.roles$ = this.store.select(fromRoot.getCrossRole);
     this.roles$.subscribe(res => this.isFirstPlayerPlayCrosses = res);
+    this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
+    this.isWinnerShown$.subscribe(res => this.isWinnerShown = res);
   }
 
   generateCells() {
@@ -91,7 +94,6 @@ export class CurrentGameComponent implements OnInit {
   checkCombination(arr) {
     for (const item in this.combinations) {
       if (this.combinations[item].every(comb => arr.includes(comb))) {
-        this.isGameFinished = true;
         if (this.isFirstPlayerTurn) {
           this.finishGame.emit(this.playersData.firstPlayer.name);
           this.store.dispatch(finishGame({

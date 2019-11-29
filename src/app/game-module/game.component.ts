@@ -11,6 +11,7 @@ import { Player, PlayersData } from '../shared/interfaces';
 })
 export class GameComponent implements OnInit {
   isOngoingGame$: Observable<boolean>;
+  isWinnerShown$: Observable<boolean>;
   playersData$: Observable<PlayersData>;
   firstPlayer: Player = {
     score: 0,
@@ -28,9 +29,9 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
+    this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => {
-      console.log(res)
       this.firstPlayer = res.firstPlayer;
       this.secondPlayer = res.secondPlayer;
     });
