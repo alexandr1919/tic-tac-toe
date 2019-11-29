@@ -3,5 +3,8 @@
   <ng-template #isWinnerShowed>
     The winner is {{result}}
   </ng-template>
-
+  <div class="button-wrapper">
+    <button class="button" (click)="startNewGame()">Start new game</button>
+    <button class="button" (click)="resetScore()">Reset score</button>
+  </div>
 </section>

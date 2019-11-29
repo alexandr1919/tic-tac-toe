@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import * as fromRoot from '../../app.reducer';
 import { nextTurn } from '../../shared/game.actions';
+import { finishGame } from '../../shared/base.actions';
 import { PlayersData } from '../../shared/interfaces';
 
 @Component({
@@ -57,6 +58,7 @@ export class CurrentGameComponent implements OnInit {
   }
 
   shot(item) {
+    // if at ninth turn no winner - it's a draw
     this.shotsCount++;
     if (this.firstPlayerShots.includes(item) || this.secondPlayerShots.includes(item)) return;
     if (this.isFirstPlayerTurn) {
@@ -68,7 +70,21 @@ export class CurrentGameComponent implements OnInit {
       this.secondPlayerShots.push(item);
       this.checkCombination(this.secondPlayerShots);
     }
-    if (this.shotsCount === 9) this.finishGame.emit('draw')
+    console.log(this.cellsState)
+    if (this.shotsCount === 9) {
+      this.finishGame.emit('draw');
+      this.store.dispatch(finishGame({
+        firstPlayer: {
+          name: this.playersData.firstPlayer.name,
+          score: this.playersData.firstPlayer.score
+        },
+        secondPlayer: {
+          name: this.playersData.secondPlayer.name,
+          score: this.playersData.secondPlayer.score
+        }
+      }));
+      return;
+    }
     this.store.dispatch(nextTurn({isFirstPlayerTurn: !this.isFirstPlayerTurn}));
   }
 
@@ -77,9 +93,29 @@ export class CurrentGameComponent implements OnInit {
       if (this.combinations[item].every(comb => arr.includes(comb))) {
         this.isGameFinished = true;
         if (this.isFirstPlayerTurn) {
-          this.finishGame.emit(this.playersData.firstPlayer.name)
+          this.finishGame.emit(this.playersData.firstPlayer.name);
+          this.store.dispatch(finishGame({
+            firstPlayer: {
+              name: this.playersData.firstPlayer.name,
+              score: this.playersData.firstPlayer.score++
+            },
+            secondPlayer: {
+              name: this.playersData.secondPlayer.name,
+              score: this.playersData.secondPlayer.score
+            }
+          }));
         } else {
-          this.finishGame.emit(this.playersData.secondPlayer.name)
+          this.finishGame.emit(this.playersData.secondPlayer.name);
+          this.store.dispatch(finishGame({
+            firstPlayer: {
+              name: this.playersData.firstPlayer.name,
+              score: this.playersData.firstPlayer.score
+            },
+            secondPlayer: {
+              name: this.playersData.secondPlayer.name,
+              score: this.playersData.secondPlayer.score++
+            }
+          }));
         }
       }
     }

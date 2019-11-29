@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-finish-game',
@@ -8,9 +11,17 @@ import { Component, Input, OnInit } from '@angular/core';
 export class FinishGameComponent implements OnInit {
   @Input() result: string;
 
-  constructor() { }
+  constructor(private store: Store<fromRoot.State> ) { }
 
   ngOnInit() {
+  }
+
+  startNewGame() {
+    this.store.dispatch()
+  }
+
+  resetScore() {
+
   }
 
 }

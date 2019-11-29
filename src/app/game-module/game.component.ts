@@ -30,6 +30,7 @@ export class GameComponent implements OnInit {
     this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => {
+      console.log(res)
       this.firstPlayer = res.firstPlayer;
       this.secondPlayer = res.secondPlayer;
     });
@@ -37,5 +38,6 @@ export class GameComponent implements OnInit {
 
   finishGame(name: string) {
     this.result = name;
+    console.log(this.firstPlayer)
   }
 }
