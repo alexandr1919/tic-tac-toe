@@ -4,11 +4,13 @@ import { nextGame, nextTurn } from './game.actions';
 export interface State {
   isFirstPlayerTurn: boolean;
   isFirstPlayerPlaysCrosses: boolean;
+  isOngoingGame: boolean;
 }
 
 const initialState: State = {
   isFirstPlayerTurn: true,
-  isFirstPlayerPlaysCrosses: true
+  isFirstPlayerPlaysCrosses: true,
+  isOngoingGame: false
 };
 
 const reducer = createReducer(initialState,

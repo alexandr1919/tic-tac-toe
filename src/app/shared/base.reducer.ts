@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { startGame, finishGame } from './base.actions';
+import { startGame, finishGame, resetScore } from './base.actions';
 
 export interface State {
   playersData: {
@@ -12,7 +12,7 @@ export interface State {
       score: number
     };
   };
-  isOngoingGame: boolean;
+  isStartScreen: boolean;
 }
 
 const initialState: State = {
@@ -26,7 +26,7 @@ const initialState: State = {
       score: 0
     }
   },
-  isOngoingGame: false
+  isStartScreen: true
 };
 
 const reducer = createReducer(initialState,
@@ -41,16 +41,20 @@ const reducer = createReducer(initialState,
         score: 0
       },
     },
-    isOngoingGame: true
+    isStartScreen: false
   })),
   on(finishGame, (state, props) => ({
     ...state,
     ...props
-  })));
+  })),
+  on(resetScore, (state = initialState) => ({
+    ...state
+  }))
+);
 
 export function baseReducer(state, action) {
   return reducer(state, action);
 }
 
-export const getGameState = (state: State) =>  state.isOngoingGame;
+export const getScreenState = (state: State) =>  state.isStartScreen;
 export const getPlayersData = (state: State) => state.playersData;

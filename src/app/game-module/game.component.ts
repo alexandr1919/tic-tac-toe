@@ -10,7 +10,7 @@ import { Player, PlayersData } from '../shared/interfaces';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  isOngoingGame$: Observable<boolean>;
+  isStartScreen$: Observable<boolean>;
   playersData$: Observable<PlayersData>;
   firstPlayer: Player = {
     score: 0,
@@ -27,7 +27,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
+    this.isStartScreen$ = this.store.select(fromRoot.getScreenState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => {
       console.log(res)
@@ -38,6 +38,5 @@ export class GameComponent implements OnInit {
 
   finishGame(name: string) {
     this.result = name;
-    console.log(this.firstPlayer)
   }
 }

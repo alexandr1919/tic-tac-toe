@@ -14,7 +14,7 @@ import { PlayersData } from '../../shared/interfaces';
 })
 export class CurrentGameComponent implements OnInit {
   @Output() finishGame = new EventEmitter<string>();
-  isOngoingGame$: Observable<boolean>;
+  isStartScreen$: Observable<boolean>;
   turn$: Observable<boolean>;
   roles$: Observable<boolean>;
   playersData$: Observable<PlayersData>;
@@ -42,7 +42,7 @@ export class CurrentGameComponent implements OnInit {
 
   ngOnInit() {
     this.generateCells();
-    this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
+    this.isStartScreen$ = this.store.select(fromRoot.getScreenState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => this.playersData = res);
     this.turn$ = this.store.select(fromRoot.getTurn);

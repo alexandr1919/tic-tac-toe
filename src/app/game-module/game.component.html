@@ -1,4 +1,4 @@
-<section class="score-block" *ngIf="isOngoingGame$ | async">
+<section class="score-block" *ngIf="!(isStartScreen$ | async)">
   <div class="score-wrapper">
     <span class="player-name">{{firstPlayer.name}}</span>
     <span class="player-score">{{firstPlayer.score}}</span>
@@ -9,6 +9,6 @@
   </div>
 </section>
 
-<app-start-game *ngIf="!(isOngoingGame$ | async)"></app-start-game>
-<app-current-game *ngIf="isOngoingGame$ | async" (finishGame)="finishGame($event)"></app-current-game>
+<app-start-game *ngIf="isStartScreen$ | async"></app-start-game>
+<app-current-game *ngIf="!(isStartScreen$ | async)" (finishGame)="finishGame($event)"></app-current-game>
 <app-finish-game *ngIf="result" [result]="result"></app-finish-game>

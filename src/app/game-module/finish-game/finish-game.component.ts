@@ -17,10 +17,10 @@ export class FinishGameComponent implements OnInit {
   }
 
   startNewGame() {
-    this.store.dispatch()
   }
 
   resetScore() {
+    this.store.dispatch()
 
   }
 
