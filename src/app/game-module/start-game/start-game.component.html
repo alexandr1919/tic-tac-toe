@@ -1,7 +1,7 @@
 <section class="wrapper">
-  <form class="form" [formGroup]="startgameForm" (ngSubmit)="setNames()">
+  <form class="form" [formGroup]="startgameForm" (ngSubmit)="startGame()">
     <div class="input-wrapper">
-      <input type="text" class="name-field" formControlName="firstPlayer">
+      <input type="text" class="name-field" formControlName="firstPlayer" #firstPlayerName>
       <input type="text"  class="name-field" formControlName="secondPlayer">
     </div>
     <button class="button submit-button">Start game</button>

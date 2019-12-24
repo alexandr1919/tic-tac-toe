@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
@@ -10,14 +10,15 @@ import { startGame } from '../../shared/base.actions';
   templateUrl: './start-game.component.html',
   styleUrls: ['./start-game.component.scss']
 })
-export class StartGameComponent implements OnInit {
+export class StartGameComponent implements OnInit, AfterViewInit {
+  @ViewChild('firstPlayerName') firstPlayerNameField: ElementRef;
   isSubmitted: boolean;
   startgameForm = this.fb.group({
     firstPlayer: ['', Validators.required],
     secondPlayer: ['', Validators.required]
   });
 
-  setNames() {
+  startGame() {
     this.isSubmitted = true;
     if (this.startgameForm.valid) {
       this.store.dispatch(startGame({
@@ -30,6 +31,10 @@ export class StartGameComponent implements OnInit {
   constructor(private fb: FormBuilder, private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.firstPlayerNameField.nativeElement.focus();
   }
 
 }
