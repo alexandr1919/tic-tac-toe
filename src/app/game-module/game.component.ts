@@ -28,7 +28,7 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isOngoingGame$ = this.store.select(fromRoot.getBaseGameState);
+    this.isOngoingGame$ = this.store.select(fromRoot.getScreenState);
     this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
     this.playersData$.subscribe((res) => {
@@ -37,8 +37,7 @@ export class GameComponent implements OnInit {
     });
   }
 
-  finishGame(name: string) {
-    this.result = name;
-    console.log(this.firstPlayer)
+  finishGame(result: string) {
+    this.result = result;
   }
 }

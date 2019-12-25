@@ -5,20 +5,20 @@ import * as fromGame from './shared/game.reducer';
 
 export interface State {
   base: fromBase.State;
-  game: fromGame.State;
+  current: fromGame.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
   base: fromBase.baseReducer,
-  game: fromGame.gameReducer
+  current: fromGame.gameReducer
 };
 
-export const getBaseState = createFeatureSelector<fromBase.State>('base');
-export const getGameState = createFeatureSelector<fromGame.State>('game');
+export const getGameBaseState = createFeatureSelector<fromBase.State>('base');
+export const getCurrentGameState = createFeatureSelector<fromGame.State>('current');
 
-export const getBaseGameState = createSelector(getBaseState, fromBase.getGameState);
-export const getWinnerState = createSelector(getBaseState, fromBase.getWinnerState);
-export const getPlayersData = createSelector(getBaseState, fromBase.getPlayersData);
+export const getScreenState = createSelector(getGameBaseState, fromBase.getScreenState);
+export const getWinnerState = createSelector(getGameBaseState, fromBase.getWinnerState);
+export const getPlayersData = createSelector(getGameBaseState, fromBase.getPlayersData);
 
-export const getTurn = createSelector(getGameState, fromGame.getTurn);
-export const getCrossRole = createSelector(getGameState, fromGame.getCrossRole);
+export const getTurn = createSelector(getCurrentGameState, fromGame.getTurn);
+export const getCrossRole = createSelector(getCurrentGameState, fromGame.getCrossRole);

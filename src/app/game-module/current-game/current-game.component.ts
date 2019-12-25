@@ -73,7 +73,6 @@ export class CurrentGameComponent implements OnInit {
       this.secondPlayerShots.push(item);
       this.checkCombination(this.secondPlayerShots);
     }
-    console.log(this.cellsState)
     if (this.shotsCount === 9) {
       this.finishGame.emit('draw');
       this.store.dispatch(finishGame({

@@ -56,6 +56,6 @@ export function baseReducer(state, action) {
   return reducer(state, action);
 }
 
-export const getGameState = (state: State) =>  state.isOngoingGame;
+export const getScreenState = (state: State) =>  state.isOngoingGame;
 export const getWinnerState = (state: State) => state.isWinnerShown;
 export const getPlayersData = (state: State) => state.playersData;

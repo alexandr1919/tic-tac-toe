@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '../../app.reducer';
-import { startGame } from '../../shared/base.actions';
+import { finishGame, startGame } from '../../shared/base.actions';
 
 @Component({
   selector: 'app-finish-game',
@@ -18,9 +18,9 @@ export class FinishGameComponent implements OnInit {
   }
 
   startNewGame() {
-    // this.store.dispatch(startGame({
+    // this.store.dispatch(finishGame({
     //
-    // }))
+    // }));
   }
 
   resetScore() {
