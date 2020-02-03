@@ -4,6 +4,6 @@
       *ngFor="let cell of cells; let i = index"
       class="cell cell--{{i + 1}}"
       [ngClass]="cellsState[i + 1]"
-      (click)="shot(i + 1)"></div>
+      (click)="shot(i)"></div>
   </div>
 </section>

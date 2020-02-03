@@ -2,19 +2,24 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/s
 
 import * as fromBase from './shared/base.reducer';
 import * as fromGame from './shared/game.reducer';
+import * as fromBoard from './shared/board.reducer';
+import { Board } from './shared/interfaces';
 
 export interface State {
   base: fromBase.State;
   current: fromGame.State;
+  board: Board;
 }
 
 export const reducers: ActionReducerMap<State> = {
   base: fromBase.baseReducer,
-  current: fromGame.gameReducer
+  current: fromGame.gameReducer,
+  board: fromBoard.boardReducer
 };
 
 export const getGameBaseState = createFeatureSelector<fromBase.State>('base');
 export const getCurrentGameState = createFeatureSelector<fromGame.State>('current');
+export const getBoardState = createFeatureSelector<Board>('board')
 
 export const getScreenState = createSelector(getGameBaseState, fromBase.getScreenState);
 export const getWinnerState = createSelector(getGameBaseState, fromBase.getWinnerState);

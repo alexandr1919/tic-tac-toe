@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import * as fromRoot from '../../app.reducer';
 import { nextTurn } from '../../shared/game.actions';
 import { finishGame } from '../../shared/base.actions';
-import { PlayersData } from '../../shared/interfaces';
+import { Board, PlayersData } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-current-game',
@@ -19,6 +19,7 @@ export class CurrentGameComponent implements OnInit {
   roles$: Observable<boolean>;
   playersData$: Observable<PlayersData>;
   isWinnerShown$: Observable<boolean>;
+  boardState$: Observable<Board>;
   playersData: PlayersData;
   cells: number[] = [];
   cellsState = {};
@@ -39,19 +40,26 @@ export class CurrentGameComponent implements OnInit {
     [3, 5, 7]
   ];
 
+  boardState: Board;
+
   constructor(private store: Store<fromRoot.State> ) { }
 
   ngOnInit() {
     this.generateCells();
+    this.playersData$ = this.store.select(fromRoot.getPlayersData);
+    this.boardState$ = this.store.select(fromRoot.getBoardState);
     this.isStartScreen$ = this.store.select(fromRoot.getScreenState);
     this.playersData$ = this.store.select(fromRoot.getPlayersData);
-    this.playersData$.subscribe((res) => this.playersData = res);
+    this.playersData$.subscribe(res => this.playersData = res);
     this.turn$ = this.store.select(fromRoot.getTurn);
     this.turn$.subscribe(res => this.isFirstPlayerTurn = res);
     this.roles$ = this.store.select(fromRoot.getCrossRole);
     this.roles$.subscribe(res => this.isFirstPlayerPlayCrosses = res);
     this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
     this.isWinnerShown$.subscribe(res => this.isWinnerShown = res);
+    this.boardState$.subscribe(res => {
+      console.log(res)
+    })
   }
 
   generateCells() {
@@ -61,32 +69,34 @@ export class CurrentGameComponent implements OnInit {
   }
 
   shot(item) {
+    console.log(item)
+    this.store.dispatch()
     // if at ninth turn no winner - it's a draw
-    this.shotsCount++;
-    if (this.firstPlayerShots.includes(item) || this.secondPlayerShots.includes(item)) return;
-    if (this.isFirstPlayerTurn) {
-      this.cellsState[item] = 'crossed';
-      this.firstPlayerShots.push(item);
-      this.checkCombination(this.firstPlayerShots);
-    } else {
-      this.cellsState[item] = 'noughted';
-      this.secondPlayerShots.push(item);
-      this.checkCombination(this.secondPlayerShots);
-    }
-    if (this.shotsCount === 9) {
-      this.finishGame.emit('draw');
-      this.store.dispatch(finishGame({
-        firstPlayer: {
-          name: this.playersData.firstPlayer.name,
-          score: this.playersData.firstPlayer.score
-        },
-        secondPlayer: {
-          name: this.playersData.secondPlayer.name,
-          score: this.playersData.secondPlayer.score
-        }
-      }));
-      return;
-    }
+    // this.shotsCount++;
+    // if (this.firstPlayerShots.includes(item) || this.secondPlayerShots.includes(item)) return;
+    // if (this.isFirstPlayerTurn) {
+    //   this.cellsState[item] = 'crossed';
+    //   this.firstPlayerShots.push(item);
+    //   this.checkCombination(this.firstPlayerShots);
+    // } else {
+    //   this.cellsState[item] = 'noughted';
+    //   this.secondPlayerShots.push(item);
+    //   this.checkCombination(this.secondPlayerShots);
+    // }
+    // if (this.shotsCount === 9) {
+    //   this.finishGame.emit('draw');
+    //   this.store.dispatch(finishGame({
+    //     firstPlayer: {
+    //       name: this.playersData.firstPlayer.name,
+    //       score: this.playersData.firstPlayer.score
+    //     },
+    //     secondPlayer: {
+    //       name: this.playersData.secondPlayer.name,
+    //       score: this.playersData.secondPlayer.score
+    //     }
+    //   }));
+    //   return;
+    // }
     this.store.dispatch(nextTurn({isFirstPlayerTurn: !this.isFirstPlayerTurn}));
   }
 
