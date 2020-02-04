@@ -1,0 +1,10 @@
+<section class="score-block" *ngIf="isOngoingGame$ | async">
+  <div class="score-wrapper">
+    <span class="player-name">{{firstPlayer.name}}</span>
+    <span class="player-score">{{firstPlayer.score}}</span>
+  </div>
+  <div class="score-wrapper">
+    <span class="player-name">{{secondPlayer.name}}</span>
+    <span class="player-score">{{secondPlayer.score}}</span>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { PlayersData } from './interfaces';
-import { State } from './base.reducer';
+import { PlayersData } from '../../shared/interfaces';
+import { State } from '../reducers/base.reducer';
 
 export const startGame = createAction(
   '[Start-game Component] Start game',
@@ -13,7 +13,7 @@ export const finishGame = createAction(
 );
 
 export const resetScore = createAction(
-  '[Finish-Game Component] Reset score',
+  '[Finish-Game Component] Reset score-module',
   props<State>()
 );
 

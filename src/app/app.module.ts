@@ -8,18 +8,20 @@ import { AppComponent } from './app.component';
 import { GameModule } from './game-module/game.module';
 
 import { reducers } from './app.reducer';
+import { ScoreModule } from './score-module/score.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    GameModule,
-    ReactiveFormsModule,
-    StoreModule.forRoot(reducers)
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        GameModule,
+        ScoreModule,
+        ReactiveFormsModule,
+        StoreModule.forRoot(reducers),
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

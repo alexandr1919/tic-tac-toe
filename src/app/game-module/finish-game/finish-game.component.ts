@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '../../app.reducer';
-import { finishGame, startGame } from '../../shared/base.actions';
+import { finishGame, startGame } from '../../store/actions/base.actions';
 
 @Component({
   selector: 'app-finish-game',

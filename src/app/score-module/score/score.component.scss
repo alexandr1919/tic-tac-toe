@@ -1,0 +1,25 @@
+.score-block {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.score-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.player-name {
+  font-weight: bold;
+  font-size: 24px;
+  white-space: pre-wrap;
+}
+
+.player-score {
+  font-size: 48px;
+  color: crimson;
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import { Observable } from 'rxjs';
-import { Player, PlayersData } from '../shared/interfaces';
+import { Board, Player, PlayersData } from '../shared/interfaces';
 
 @Component({
   selector: 'app-game',
@@ -12,17 +12,9 @@ import { Player, PlayersData } from '../shared/interfaces';
 export class GameComponent implements OnInit {
   isOngoingGame$: Observable<boolean>;
   isWinnerShown$: Observable<boolean>;
-  playersData$: Observable<PlayersData>;
-  firstPlayer: Player = {
-    score: 0,
-    name: ''
-  };
-  secondPlayer: Player = {
-    score: 0,
-    name: ''
-  };
-  result: string;
-
+  playersData$: Observable<{firstPlayer: Player, secondPlayer: Player}>;
+  boardState$: Observable<Board>;
+  outcome: string;
 
   constructor(private store: Store<fromRoot.State>) {
   }
@@ -30,14 +22,12 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.isOngoingGame$ = this.store.select(fromRoot.getScreenState);
     this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
-    this.playersData$ = this.store.select(fromRoot.getPlayersData);
-    this.playersData$.subscribe((res) => {
-      this.firstPlayer = res.firstPlayer;
-      this.secondPlayer = res.secondPlayer;
-    });
+    this.boardState$ = this.store.select(fromRoot.getBoardState);
+    // this.turn$ = this.store.select(fromRoot.getTurn);
+    // this.turn$.subscribe(res => this.isFirstPlayerTurn = res);
   }
 
-  finishGame(result: string) {
-    this.result = result;
+  finishGame(outcome: string) {
+    this.outcome = outcome;
   }
 }

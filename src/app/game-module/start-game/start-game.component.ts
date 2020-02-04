@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as  fromRoot from '../../app.reducer';
-import { startGame } from '../../shared/base.actions';
+import { startGame } from '../../store/actions/base.actions';
 
 @Component({
   selector: 'app-start-game',
@@ -18,6 +18,15 @@ export class StartGameComponent implements OnInit, AfterViewInit {
     secondPlayer: ['', Validators.required]
   });
 
+  constructor(private fb: FormBuilder, private store: Store<fromRoot.State>) { }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.firstPlayerNameField.nativeElement.focus();
+  }
+
   startGame() {
     this.isSubmitted = true;
     if (this.startgameForm.valid) {
@@ -26,15 +35,6 @@ export class StartGameComponent implements OnInit, AfterViewInit {
         secondPlayerName: this.startgameForm.value.secondPlayer
       }));
     }
-  }
-
-  constructor(private fb: FormBuilder, private store: Store<fromRoot.State>) { }
-
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    this.firstPlayerNameField.nativeElement.focus();
   }
 
 }

@@ -8,15 +8,18 @@ import { CurrentGameComponent } from './current-game/current-game.component';
 import { GameComponent } from './game.component';
 
 @NgModule({
-  declarations: [
-    StartGameComponent,
-    FinishGameComponent,
-    CurrentGameComponent,
-    GameComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ]
+    declarations: [
+        StartGameComponent,
+        FinishGameComponent,
+        CurrentGameComponent,
+        GameComponent
+    ],
+    exports: [
+        GameComponent
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule
+    ]
 })
 export class GameModule { }

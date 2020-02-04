@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { Board as State } from './interfaces';
-import { shoot } from './board.actions';
+import { Board as State } from '../../shared/interfaces';
+import { shoot } from '../actions/board.actions';
 
 const initialState: State = {
   0: 'empty',
