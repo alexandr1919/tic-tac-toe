@@ -1,4 +1,12 @@
+export interface GameState {
+  isFirstPlayerTurn: boolean;
+  isFirstPlayerPlaysCrosses: boolean;
+}
 
+export interface PlayersData {
+  firstPlayer: Player;
+  secondPlayer: Player;
+}
 
 export interface Player {
   score: number;
@@ -15,4 +23,10 @@ export interface Board {
   6: 'empty' | 'crossed' | 'noughted';
   7: 'empty' | 'crossed' | 'noughted';
   8: 'empty' | 'crossed' | 'noughted';
+}
+
+export interface StrokeShot {
+  cell: number;
+  state: 'crossed' | 'noughted';
+  isFirstPlayerTurn: boolean;
 }

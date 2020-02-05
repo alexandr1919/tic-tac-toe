@@ -11,25 +11,17 @@ import { Store } from '@ngrx/store';
 })
 export class ScoreComponent implements OnInit {
   playersData$: Observable<PlayersData>;
-  isOngoingGame$: Observable<boolean>;
 
-  firstPlayer: Player = {
-    score: 0,
-    name: ''
-  };
-  secondPlayer: Player = {
-    score: 0,
-    name: ''
-  };
+  firstPlayer: Player;
+  secondPlayer: Player;
 
   constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.playersData$ = this.store.select(fromRoot.getPlayersDataState);
     this.playersData$.subscribe(res => {
-      console.log(res)
-      // this.firstPlayer = res.firstPlayer;
-      // this.secondPlayer = res.secondPlayer;
+      this.firstPlayer = res.firstPlayer;
+      this.secondPlayer = res.secondPlayer;
     });
 
 

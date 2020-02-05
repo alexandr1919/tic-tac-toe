@@ -10,7 +10,7 @@ import { finishGame, startGame } from '../../store/actions/base.actions';
   styleUrls: ['./finish-game.component.scss']
 })
 export class FinishGameComponent implements OnInit {
-  @Input() result: string;
+  @Input() outcome: string;
 
   constructor(private store: Store<fromRoot.State> ) { }
 

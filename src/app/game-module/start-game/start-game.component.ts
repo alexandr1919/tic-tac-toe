@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { startGame } from '../../store/actions/players-data.actions';
+
 
 import * as  fromRoot from '../../app.reducer';
-import { startGame } from '../../store/actions/base.actions';
 
 @Component({
   selector: 'app-start-game',

@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { startGame, finishGame } from '../actions/base.actions';
+import { finishGame } from '../actions/base.actions';
 import { Player } from '../../shared/interfaces';
+import { startGame } from '../actions/players-data.actions';
 
 
 export interface State {

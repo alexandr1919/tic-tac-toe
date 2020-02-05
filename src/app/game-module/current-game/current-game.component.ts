@@ -1,34 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromRoot from '../../app.reducer';
 import { nextTurn } from '../../store/actions/game.actions';
 import { finishGame } from '../../store/actions/base.actions';
-import { Board, PlayersData } from '../../shared/interfaces';
+import { Board, GameState, PlayersData, StrokeShot } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-current-game',
   templateUrl: './current-game.component.html',
   styleUrls: ['./current-game.component.scss']
 })
-export class CurrentGameComponent implements OnInit {
+export class CurrentGameComponent implements OnInit, DoCheck {
   @Input() board: Board;
-  @Output() finishGame = new EventEmitter<string>();
+  @Input() gameState: GameState;
+  @Output() shotStroke: EventEmitter<StrokeShot> = new EventEmitter();
   boardValues: string[];
   isStartScreen$: Observable<boolean>;
   turn$: Observable<boolean>;
   roles$: Observable<boolean>;
-  playersData$: Observable<PlayersData>;
   isWinnerShown$: Observable<boolean>;
   playersData: PlayersData;
-  cells: number[] = [];
-  cellsState = {};
-  isFirstPlayerTurn = true;
-  isFirstPlayerPlayCrosses = true;
+  isFirstPlayerTurn: boolean;
+  isFirstPlayerPlayCrosses: boolean;
   firstPlayerShots: number[] = [];
   secondPlayerShots: number[] = [];
-  shotsCount = 0;
   isWinnerShown = false;
   combinations: number[][] = [
     [1, 2, 3],
@@ -41,7 +38,15 @@ export class CurrentGameComponent implements OnInit {
     [3, 5, 7]
   ];
 
-  constructor(private store: Store<fromRoot.State> ) { }
+  constructor() { }
+
+
+
+  ngDoCheck() {
+    console.log(this.gameState)
+    this.isFirstPlayerTurn = this.gameState.isFirstPlayerTurn;
+    this.isFirstPlayerPlayCrosses = this.gameState.isFirstPlayerPlaysCrosses;
+  }
 
   ngOnInit() {
     this.boardValues = Object.values(this.board);
@@ -57,8 +62,20 @@ export class CurrentGameComponent implements OnInit {
     // this.isWinnerShown$.subscribe(res => this.isWinnerShown = res);
   }
 
-  shot(item) {
-    console.log(item)
+  emitShot(cellNumber, stateName) {
+    this.shotStroke.emit({
+      cell: cellNumber,
+      state: stateName,
+      isFirstPlayerTurn: !this.gameState.isFirstPlayerTurn
+    });
+  }
+
+  shot(cell) {
+    if (this.isFirstPlayerTurn) {
+      this.emitShot(cell, 'crossed');
+    } else {
+      this.emitShot(cell, 'noughted');
+    }
     //this.store.dispatch()
     // if at ninth turn no winner - it's a draw
     // this.shotsCount++;

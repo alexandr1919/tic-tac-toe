@@ -12,10 +12,13 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState,
-  on(nextTurn, (state, props) => ({
+  on(nextTurn, (state, props) => {
+    console.log(props)
+    return {
       ...state,
       isFirstPlayerTurn: props.isFirstPlayerTurn
-  })),
+    }
+  }),
   on(nextGame, (state, props) => ({
     ...state,
     isFirstPlayerPlaysCrosses: props.isFirstPlayerPlayCrosses
@@ -24,6 +27,6 @@ const reducer = createReducer(initialState,
 export function gameReducer(state, action) {
   return reducer(state, action);
 }
-
-export const getTurn = (state: State) => state.isFirstPlayerTurn;
-export const getCrossRole = (state: State) => state.isFirstPlayerPlaysCrosses;
+//
+// export const getTurn = (state: State) => state.isFirstPlayerTurn;
+// export const getCrossRole = (state: State) => state.isFirstPlayerPlaysCrosses;
