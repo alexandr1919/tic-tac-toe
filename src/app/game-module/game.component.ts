@@ -53,7 +53,7 @@ export class GameComponent implements OnInit {
       isFirstPlayerTurn: event.isFirstPlayerTurn
     }));
     this.store.dispatch(shoot(this.boardState));
-    console.log(this.boardState)
+    if (Object.values(this.boardState).includes(null))
   }
 
   finishGame(outcome: string) {
