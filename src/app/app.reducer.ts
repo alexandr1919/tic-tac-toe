@@ -29,5 +29,5 @@ export const getScreenState = createSelector(getGameBaseState, fromBase.getScree
 export const getWinnerState = createSelector(getGameBaseState, fromBase.getWinnerState);
 //export const getPlayersData = createSelector(getGameBaseState, fromBase.getPlayersData);
 
-// export const getTurn = createSelector(getGameState, fromGame.getTurn);
+export const getTurn = createSelector(getGameState, fromGame.getTurn);
 // export const getCrossRole = createSelector(getGameState, fromGame.getCrossRole);

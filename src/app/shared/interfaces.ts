@@ -1,3 +1,8 @@
+export interface BaseState {
+  isWinnerShown: boolean;
+  isOngoingGame: boolean;
+}
+
 export interface GameState {
   isFirstPlayerTurn: boolean;
   isFirstPlayerPlaysCrosses: boolean;
@@ -14,18 +19,18 @@ export interface Player {
 }
 
 export interface Board {
-  0: 'empty' | 'crossed' | 'noughted';
-  1: 'empty' | 'crossed' | 'noughted';
-  2: 'empty' | 'crossed' | 'noughted';
-  3: 'empty' | 'crossed' | 'noughted';
-  4: 'empty' | 'crossed' | 'noughted';
-  5: 'empty' | 'crossed' | 'noughted';
-  6: 'empty' | 'crossed' | 'noughted';
-  7: 'empty' | 'crossed' | 'noughted';
-  8: 'empty' | 'crossed' | 'noughted';
+  0: null | 'crossed' | 'noughted';
+  1: null | 'crossed' | 'noughted';
+  2: null | 'crossed' | 'noughted';
+  3: null | 'crossed' | 'noughted';
+  4: null | 'crossed' | 'noughted';
+  5: null | 'crossed' | 'noughted';
+  6: null | 'crossed' | 'noughted';
+  7: null | 'crossed' | 'noughted';
+  8: null | 'crossed' | 'noughted';
 }
 
-export interface StrokeShot {
+export interface FiredShot {
   cell: number;
   state: 'crossed' | 'noughted';
   isFirstPlayerTurn: boolean;

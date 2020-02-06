@@ -1,8 +1,13 @@
-<app-start-game *ngIf="!isOngoingGame"></app-start-game>
+<app-start-game
+  *ngIf="!isOngoingGame"
+  (gameStarted)="gameStarted($event)"
+>
+</app-start-game>
 <app-current-game
   *ngIf="isOngoingGame"
   [gameState] = "gameState$ | async"
   [board]="boardState$ | async"
-  (shotStroke)="shot($event)"
+  [isFirstPlayerTurn]="turn$ | async"
+  (shotFired)="shot($event)"
 ></app-current-game>
-<app-finish-game *ngIf="isWinnerShown$ | async" [outcome]="outcome"></app-finish-game>
+<app-finish-game *ngIf="isWinnerShown$ | async"></app-finish-game>

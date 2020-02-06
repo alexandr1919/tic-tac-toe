@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { finishGame } from '../actions/base.actions';
+import { finishGame, newGame } from '../actions/base.actions';
 import { startGame } from '../actions/players-data.actions';
 
 export interface State {
@@ -13,7 +13,7 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState,
-  on(startGame, () => ({
+  on(newGame, () => ({
     isOngoingGame: true,
     isWinnerShown: false
   }))/*,

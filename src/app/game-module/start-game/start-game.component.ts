@@ -1,10 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { startGame } from '../../store/actions/players-data.actions';
-
-
-import * as  fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-start-game',
@@ -13,13 +8,14 @@ import * as  fromRoot from '../../app.reducer';
 })
 export class StartGameComponent implements OnInit, AfterViewInit {
   @ViewChild('firstPlayerName') firstPlayerNameField: ElementRef;
+  @Output() gameStarted: EventEmitter<string[]> = new EventEmitter();
   isSubmitted: boolean;
   startgameForm = this.fb.group({
     firstPlayer: ['', Validators.required],
     secondPlayer: ['', Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private store: Store<fromRoot.State>) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }
@@ -31,10 +27,7 @@ export class StartGameComponent implements OnInit, AfterViewInit {
   startGame() {
     this.isSubmitted = true;
     if (this.startgameForm.valid) {
-      this.store.dispatch(startGame({
-        firstPlayerName: this.startgameForm.value.firstPlayer,
-        secondPlayerName: this.startgameForm.value.secondPlayer
-      }));
+      this.gameStarted.emit([this.startgameForm.value.firstPlayer, this.startgameForm.value.secondPlayer]);
     }
   }
 
