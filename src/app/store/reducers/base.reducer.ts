@@ -16,7 +16,12 @@ const reducer = createReducer(initialState,
   on(newGame, () => ({
     isOngoingGame: true,
     isWinnerShown: false
-  }))/*,
+  })),
+  on(finishGame, () => ({
+      isOngoingGame: true,  // should i splice this state in different slice of state in order not to copypast it when it not needed
+      isWinnerShown: true
+    })
+  )/*,
   on(finishGame, (state, props) => ({
     ...state,
     ...props,

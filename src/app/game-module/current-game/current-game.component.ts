@@ -1,10 +1,4 @@
-import { Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
-import * as fromRoot from '../../app.reducer';
-import { nextTurn } from '../../store/actions/game.actions';
-import { finishGame } from '../../store/actions/base.actions';
+import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Board, GameState, PlayersData, FiredShot } from '../../shared/interfaces';
 
 @Component({
@@ -16,27 +10,11 @@ export class CurrentGameComponent implements OnInit, DoCheck {
   @Input() board: Board;
   @Input() gameState: GameState;
   @Input() isFirstPlayerTurn: boolean;
+  @Input() isWinnerShown: boolean;
   @Output() shotFired: EventEmitter<FiredShot> = new EventEmitter();
   boardValues: string[];
-  isStartScreen$: Observable<boolean>;
-  turn$: Observable<boolean>;
-  roles$: Observable<boolean>;
-  isWinnerShown$: Observable<boolean>;
   playersData: PlayersData;
   isFirstPlayerPlayCrosses: boolean;
-  firstPlayerShots: number[] = [];
-  secondPlayerShots: number[] = [];
-  isWinnerShown = false;
-  combinations: number[][] = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [1, 5, 9],
-    [3, 5, 7]
-  ];
 
   constructor() { }
 

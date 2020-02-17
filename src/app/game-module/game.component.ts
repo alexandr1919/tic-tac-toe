@@ -1,12 +1,13 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import { Observable } from 'rxjs';
-import { Board, GameState, Player, PlayersData } from '../shared/interfaces';
+import { Board, GameState, Player } from '../shared/interfaces';
 import { nextTurn } from '../store/actions/game.actions';
 import { startGame } from '../store/actions/players-data.actions';
-import { newGame } from '../store/actions/base.actions';
+import { finishGame, newGame } from '../store/actions/base.actions';
 import { shoot } from '../store/actions/board.actions';
+import { combinations } from '../shared/util';
 
 @Component({
   selector: 'app-game',
@@ -33,14 +34,14 @@ export class GameComponent implements OnInit {
     this.turn$ = this.store.select(fromRoot.getTurn);
     this.boardState$.subscribe(res => {
       this.boardState = res;
+      this.boardState.type && delete this.boardState.type; // TODO figure out why every action leads to "type" property in state object
     });
-    // this.turn$.subscribe(res => this.isFirstPlayerTurn = res);
   }
 
-  gameStarted(event) {
+  gameStarted(playerNames) {
     this.store.dispatch(startGame({
-      firstPlayerName: event[0],
-      secondPlayerName: event[1]
+      firstPlayerName: playerNames[0],
+      secondPlayerName: playerNames[1]
     }));
     this.store.dispatch(newGame({}));
   }
@@ -53,8 +54,25 @@ export class GameComponent implements OnInit {
       isFirstPlayerTurn: event.isFirstPlayerTurn
     }));
     this.store.dispatch(shoot(this.boardState));
-    if (Object.values(this.boardState).includes(null))
+    this.checkCombination();
   }
+
+  checkCombination() {
+    const boardStateArr = Object.values(this.boardState);
+    if (!boardStateArr.includes(null)) {
+      this.store.dispatch(finishGame({}));
+      return;
+    }
+
+    combinations.forEach((combination, index) => {
+      const newArr = [];
+      combination.forEach((cellIndex) => {
+        newArr.push(boardStateArr[index]);
+      });
+      console.log(newArr)
+    })
+  }
+
 
   finishGame(outcome: string) {
     //this.outcome = outcome;
