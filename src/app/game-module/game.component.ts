@@ -65,16 +65,14 @@ export class GameComponent implements OnInit {
     }
 
     combinations.forEach((combination, index) => {
-      const newArr = [];
-      combination.forEach((cellIndex) => {
-        newArr.push(boardStateArr[index]);
+      const arrayToCheck = [];
+      combination.forEach((cell) => {
+        arrayToCheck.push(this.boardState[cell]);
+        if (arrayToCheck.length > 2 && arrayToCheck.every((val, i, arr) => val === arr[0] && val !== null)) {
+          this.store.dispatch(finishGame({}));
+        }
       });
-      console.log(newArr)
-    })
+    });
   }
 
-
-  finishGame(outcome: string) {
-    //this.outcome = outcome;
-  }
 }
