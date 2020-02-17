@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import { Observable } from 'rxjs';
-import { Board, GameState, Player } from '../shared/interfaces';
+import { Board, GameState, PlayersData } from '../shared/interfaces';
 import { nextTurn } from '../store/actions/game.actions';
 import { startGame } from '../store/actions/players-data.actions';
 import { finishGame, newGame } from '../store/actions/base.actions';
@@ -16,14 +16,14 @@ import { combinations } from '../shared/util';
 })
 export class GameComponent implements OnInit {
   @Input() isOngoingGame: boolean;
-
+  @Input() playersData: PlayersData;
   gameState$: Observable<GameState>;
   isWinnerShown$: Observable<boolean>;
-  playersData$: Observable<{firstPlayer: Player, secondPlayer: Player}>;
   boardState$: Observable<Board>;
   turn$: Observable<boolean>;
   boardState: Board;
-  //outcome: string;
+  isFirstPlayerTurn: boolean;
+  outcome: string;
 
   constructor(private store: Store<fromRoot.State>) {}
 
@@ -36,6 +36,9 @@ export class GameComponent implements OnInit {
       this.boardState = res;
       this.boardState.type && delete this.boardState.type; // TODO figure out why every action leads to "type" property in state object
     });
+    this.turn$.subscribe(res => {
+      this.isFirstPlayerTurn = res;
+    })
   }
 
   gameStarted(playerNames) {
@@ -61,6 +64,7 @@ export class GameComponent implements OnInit {
     const boardStateArr = Object.values(this.boardState);
     if (!boardStateArr.includes(null)) {
       this.store.dispatch(finishGame({}));
+      this.outcome = 'draw';
       return;
     }
 
@@ -70,6 +74,7 @@ export class GameComponent implements OnInit {
         arrayToCheck.push(this.boardState[cell]);
         if (arrayToCheck.length > 2 && arrayToCheck.every((val, i, arr) => val === arr[0] && val !== null)) {
           this.store.dispatch(finishGame({}));
+          this.isFirstPlayerTurn ? this.outcome = this.playersData.secondPlayer.name : this.outcome = this.playersData.firstPlayer.name;
         }
       });
     });

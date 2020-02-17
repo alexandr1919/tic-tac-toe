@@ -42,37 +42,4 @@ export class CurrentGameComponent implements OnInit, DoCheck {
       this.emitShot(cell, 'noughted');
     }
   }
-
-  checkCombination(arr) {
-    // for (const item in this.combinations) {
-    //   if (this.combinations[item].every(comb => arr.includes(comb))) {
-    //     if (this.isFirstPlayerTurn) {
-    //       this.finishGame.emit(this.playersData.firstPlayer.name);
-    //       this.store.dispatch(finishGame({
-    //         firstPlayer: {
-    //           name: this.playersData.firstPlayer.name,
-    //           score: this.playersData.firstPlayer.score++
-    //         },
-    //         secondPlayer: {
-    //           name: this.playersData.secondPlayer.name,
-    //           score: this.playersData.secondPlayer.score
-    //         }
-    //       }));
-    //     } else {
-    //       this.finishGame.emit(this.playersData.secondPlayer.name);
-    //       this.store.dispatch(finishGame({
-    //         firstPlayer: {
-    //           name: this.playersData.firstPlayer.name,
-    //           score: this.playersData.firstPlayer.score
-    //         },
-    //         secondPlayer: {
-    //           name: this.playersData.secondPlayer.name,
-    //           score: this.playersData.secondPlayer.score++
-    //         }
-    //       }));
-    //     }
-    //   }
-    // }
-  }
-
 }

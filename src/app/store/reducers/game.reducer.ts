@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { nextGame, nextTurn } from '../actions/game.actions';
+import { nextTurn } from '../actions/game.actions';
 
 export interface State {
   isFirstPlayerTurn: boolean;
@@ -20,7 +20,5 @@ const reducer = createReducer(initialState,
 export function gameReducer(state, action) {
   return reducer(state, action);
 }
-//
 
 export const getTurn = (state: State) => state.isFirstPlayerTurn;
-// export const getCrossRole = (state: State) => state.isFirstPlayerPlaysCrosses;

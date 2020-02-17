@@ -11,4 +11,7 @@
   [isWinnerShown]="isWinnerShown$ | async"
   (shotFired)="shot($event)"
 ></app-current-game>
-<app-finish-game *ngIf="isWinnerShown$ | async"></app-finish-game>
+<app-finish-game
+  *ngIf="isWinnerShown$ | async"
+  [outcome]="outcome"
+></app-finish-game>
