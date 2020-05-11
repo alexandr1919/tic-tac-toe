@@ -1,10 +1,9 @@
 <section class="wrapper">
-  <p *ngIf="outcome === 'draw'; else isWinnerShowed" >Draw</p>
+  <p *ngIf="isDraw; else isWinnerShowed" >Draw</p>
   <ng-template #isWinnerShowed>
     The winner is {{outcome}}
   </ng-template>
   <div class="button-wrapper">
     <button class="button" (click)="startNewGame()">Start new game</button>
-    <button class="button" (click)="resetScore()">To start screen</button>
   </div>
 </section>

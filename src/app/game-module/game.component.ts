@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
+
 import * as fromRoot from '../app.reducer';
-import { Observable } from 'rxjs';
-import { Board, GameState, PlayersData } from '../shared/interfaces';
-import { nextTurn } from '../store/actions/game.actions';
-import { startGame } from '../store/actions/players-data.actions';
-import { finishGame, newGame } from '../store/actions/base.actions';
-import { shoot } from '../store/actions/board.actions';
-import { combinations } from '../shared/util';
+import * as fromPlayersData from '../store/reducers/players-data.reducer';
+import { changeScreen, newGameAction, nextTurn } from '../store/actions/game.actions';
+import { setPlayersData } from '../store/actions/players-data.actions';
+import { CurrentGameComponent } from './current-game/current-game.component';
+import { board, RESULT, SCREEN_STATES, TURN_STATE } from '../shared/util';
 
 @Component({
   selector: 'app-game',
@@ -15,69 +14,121 @@ import { combinations } from '../shared/util';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  @Input() isOngoingGame: boolean;
-  @Input() playersData: PlayersData;
-  gameState$: Observable<GameState>;
-  isWinnerShown$: Observable<boolean>;
-  boardState$: Observable<Board>;
-  turn$: Observable<boolean>;
-  boardState: Board;
-  isFirstPlayerTurn: boolean;
+  @ViewChild(CurrentGameComponent)
+  private currentGameComponent: CurrentGameComponent;
+  @Input() playersData: fromPlayersData.State;
+  isFirstPlayerPlaysCrosses: boolean;
   outcome: string;
+  turn: string;
+  isStartScreen: boolean;
 
   constructor(private store: Store<fromRoot.State>) {}
 
   ngOnInit() {
-    this.gameState$ = this.store.select(fromRoot.getGameState);
-    this.isWinnerShown$ = this.store.select(fromRoot.getWinnerState);
-    this.boardState$ = this.store.select(fromRoot.getBoardState);
-    this.turn$ = this.store.select(fromRoot.getTurn);
-    this.boardState$.subscribe(res => {
-      this.boardState = res;
-      this.boardState.type && delete this.boardState.type; // TODO figure out why every action leads to "type" property in state object
+    this.store.select(fromRoot.getGameState).subscribe(gameState => {
+      this.isStartScreen = gameState.screenState === SCREEN_STATES.START_SCREEN;
+      this.turn = gameState.turn;
+      this.isFirstPlayerPlaysCrosses = gameState.isFirstPlayerPlaysCrosses;
     });
-    this.turn$.subscribe(res => {
-      this.isFirstPlayerTurn = res;
-    })
   }
 
-  gameStarted(playerNames) {
-    this.store.dispatch(startGame({
-      firstPlayerName: playerNames[0],
-      secondPlayerName: playerNames[1]
+  onGameStarted(playerNames) {
+    this.store.dispatch(setPlayersData({
+      firstPlayer: {
+        name: playerNames[0],
+        score: 0
+      },
+      secondPlayer: {
+        name: playerNames[1],
+        score: 0
+      }
     }));
-    this.store.dispatch(newGame({}));
+    this.store.dispatch(changeScreen({
+      screenState: SCREEN_STATES.ONGOING_GAME,
+      isFirstPlayerPlaysCrosses: true,
+      turn: TURN_STATE.CROSS
+    }));
   }
 
-  shot(event) {
-    const shootCell = event.cell;
-    if (this.boardState[shootCell] !== null) return;
-    this.boardState[shootCell] = event.state;
+  attempt(turn) {
     this.store.dispatch(nextTurn({
-      isFirstPlayerTurn: event.isFirstPlayerTurn
+      turn
     }));
-    this.store.dispatch(shoot(this.boardState));
-    this.checkCombination();
   }
 
-  checkCombination() {
-    const boardStateArr = Object.values(this.boardState);
-    if (!boardStateArr.includes(null)) {
-      this.store.dispatch(finishGame({}));
-      this.outcome = 'draw';
+  gameFinished(outcome) {
+    if (outcome === RESULT.DRAW) {
+      this.store.dispatch(changeScreen({
+        screenState: SCREEN_STATES.GAME_FINISHED,
+        isFirstPlayerPlaysCrosses: !this.isFirstPlayerPlaysCrosses,
+        turn: TURN_STATE.CROSS
+      }));
+      this.outcome = outcome;
       return;
     }
+    if (outcome === RESULT.CROSS) {
+      if (this.isFirstPlayerPlaysCrosses) {
+        this.outcome = this.playersData.firstPlayer.name;
+        this.sendAction('firstPlayer');
+      } else {
+        this.outcome = this.playersData.secondPlayer.name;
+        this.sendAction('secondPlayer');
+      }
+    } else if (this.isFirstPlayerPlaysCrosses) {
+       this.outcome = this.playersData.secondPlayer.name;
+       this.sendAction('secondPlayer');
+    } else {
+      this.outcome = this.playersData.firstPlayer.name;
+      this.sendAction('firstPlayer');
+    }
+  }
 
-    combinations.forEach((combination, index) => {
-      const arrayToCheck = [];
-      combination.forEach((cell) => {
-        arrayToCheck.push(this.boardState[cell]);
-        if (arrayToCheck.length > 2 && arrayToCheck.every((val, i, arr) => val === arr[0] && val !== null)) {
-          this.store.dispatch(finishGame({}));
-          this.isFirstPlayerTurn ? this.outcome = this.playersData.secondPlayer.name : this.outcome = this.playersData.firstPlayer.name;
-        }
-      });
-    });
+  sendAction(winner) {
+    switch (winner) {
+      case 'firstPlayer':
+        this.store.dispatch(setPlayersData({
+          firstPlayer: {
+            name: this.playersData.firstPlayer.name,
+            score: ++this.playersData.firstPlayer.score
+          },
+          secondPlayer: {
+            name: this.playersData.secondPlayer.name,
+            score: this.playersData.secondPlayer.score
+          }
+        }));
+        this.store.dispatch(changeScreen({
+          screenState: SCREEN_STATES.GAME_FINISHED,
+          isFirstPlayerPlaysCrosses: !this.isFirstPlayerPlaysCrosses,
+          turn: TURN_STATE.CROSS
+        }));
+        break;
+      case 'secondPlayer':
+        this.store.dispatch(setPlayersData({
+          firstPlayer: {
+            name: this.playersData.firstPlayer.name,
+            score: this.playersData.firstPlayer.score
+          },
+          secondPlayer: {
+            name: this.playersData.secondPlayer.name,
+            score: ++this.playersData.secondPlayer.score
+          }
+        }));
+        this.store.dispatch(changeScreen({
+          screenState: SCREEN_STATES.GAME_FINISHED,
+          isFirstPlayerPlaysCrosses: !this.isFirstPlayerPlaysCrosses,
+          turn: TURN_STATE.CROSS
+        }));
+        break;
+    }
+  }
+
+  onNewGameStarted() {
+    this.outcome = null;
+    this.currentGameComponent.board = { ...board };
+    this.currentGameComponent.isGameFinished = false;
+    this.store.dispatch(newGameAction({
+      screenState: SCREEN_STATES.ONGOING_GAME,
+    }));
   }
 
 }

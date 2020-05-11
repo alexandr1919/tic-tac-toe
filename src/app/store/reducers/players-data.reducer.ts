@@ -1,34 +1,33 @@
 import { createReducer, on } from '@ngrx/store';
-import { Player } from '../../shared/interfaces';
-import { startGame } from '../actions/players-data.actions';
 
+import { setPlayersData } from '../actions/players-data.actions';
 
 export interface State {
-  firstPlayer: Player;
-  secondPlayer: Player;
+  firstPlayer: {
+    name: string;
+    score: number;
+  };
+  secondPlayer: {
+    name: string;
+    score: number;
+  };
 }
 
 const initialState: State = {
   firstPlayer: {
-    name: '',
+    name: null,
     score: 0
   },
   secondPlayer: {
-    name: '',
+    name: null,
     score: 0
   }
 };
 
 const reducer = createReducer(initialState,
-  on(startGame, (state, props) => ({
-    firstPlayer: {
-      name: props.firstPlayerName,
-      score: 0
-    },
-    secondPlayer: {
-      name: props.secondPlayerName,
-      score: 0
-    }
+  on(setPlayersData, (state, props) => ({
+    firstPlayer: props.firstPlayer,
+    secondPlayer: props.secondPlayer
   })));
 
 export function playersDataReducer(state, action) {

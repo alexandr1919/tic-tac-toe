@@ -1,4 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-export const nextTurn = createAction('[Game Component] Next turn', props<{isFirstPlayerTurn: boolean}>());
-export const nextGame = createAction('[Game Component] Next game', props<{isFirstPlayerPlayCrosses: boolean}>());
+import * as fromGame from '../reducers/game.reducer';
+
+export const changeScreen = createAction('[Game] Change Screen', props<fromGame.State>());
+export const nextTurn = createAction('[Game] Next turn', props<{turn: string}>());
+export const newGameAction = createAction('[Game] New Game', props<{screenState: string}>());

@@ -8,9 +8,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class StartGameComponent implements OnInit, AfterViewInit {
   @ViewChild('firstPlayerName') firstPlayerNameField: ElementRef;
-  @Output() gameStarted: EventEmitter<string[]> = new EventEmitter();
+  @Output() onGameStarted: EventEmitter<string[]> = new EventEmitter();
   isSubmitted: boolean;
-  startgameForm = this.fb.group({
+  startGameForm = this.fb.group({
     firstPlayer: ['', Validators.required],
     secondPlayer: ['', Validators.required]
   });
@@ -26,8 +26,8 @@ export class StartGameComponent implements OnInit, AfterViewInit {
 
   startGame() {
     this.isSubmitted = true;
-    if (this.startgameForm.valid) {
-      this.gameStarted.emit([this.startgameForm.value.firstPlayer, this.startgameForm.value.secondPlayer]);
+    if (this.startGameForm.valid) {
+      this.onGameStarted.emit([this.startGameForm.value.firstPlayer, this.startGameForm.value.secondPlayer]);
     }
   }
 

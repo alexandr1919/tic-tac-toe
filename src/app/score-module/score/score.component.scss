@@ -8,15 +8,26 @@
 .score-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 50%;
+  position: relative;
   margin: 0 auto;
+  min-width: 100px;
   text-align: center;
+  &.active {
+    &:after {
+      position: absolute;
+      bottom: -20px;
+      content: 'Your turn';
+      min-width: 100%;
+      text-align: center;
+    }
+  }
 }
 
 .player-name {
   font-weight: bold;
   font-size: 24px;
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .player-score {

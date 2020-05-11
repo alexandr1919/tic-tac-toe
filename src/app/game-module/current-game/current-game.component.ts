@@ -1,45 +1,47 @@
-import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Board, GameState, PlayersData, FiredShot } from '../../shared/interfaces';
+import { Component, DoCheck, EventEmitter, Input, Output } from '@angular/core';
+
+import { board as initialBoardState, COMBINATIONS, RESULT, TURN_STATE } from '../../shared/util';
 
 @Component({
   selector: 'app-current-game',
   templateUrl: './current-game.component.html',
   styleUrls: ['./current-game.component.scss']
 })
-export class CurrentGameComponent implements OnInit, DoCheck {
-  @Input() board: Board;
-  @Input() gameState: GameState;
-  @Input() isFirstPlayerTurn: boolean;
-  @Input() isWinnerShown: boolean;
-  @Output() shotFired: EventEmitter<FiredShot> = new EventEmitter();
-  boardValues: string[];
-  playersData: PlayersData;
-  isFirstPlayerPlayCrosses: boolean;
-
-  constructor() { }
-
-  ngOnInit() {
-    this.isFirstPlayerTurn = this.gameState.isFirstPlayerTurn;
-    this.isFirstPlayerPlayCrosses = this.gameState.isFirstPlayerPlaysCrosses;
-  }
+export class CurrentGameComponent implements DoCheck {
+  @Input() turn: string;
+  @Input() isFirstPlayerPlaysCrosses: boolean;
+  @Output() emittedAttempt: EventEmitter<string> = new EventEmitter();
+  @Output() gameFinished: EventEmitter<string> = new EventEmitter();
+  isGameFinished: boolean;
+  board = { ...initialBoardState };
+  boardAsArray: string[];
 
   ngDoCheck() {
-    this.boardValues = Object.values(this.board);
+    this.boardAsArray = Object.values(this.board);
   }
 
-  emitShot(cellNumber, stateName) {
-    this.shotFired.emit({
-      cell: cellNumber,
-      state: stateName,
-      isFirstPlayerTurn: !this.gameState.isFirstPlayerTurn
+  attempt(cell) {
+    if (this.board[cell] !== null) return;
+    this.emittedAttempt.next(this.turn === TURN_STATE.CROSS ? TURN_STATE.NOUGHT : TURN_STATE.CROSS);
+    this.turn === TURN_STATE.CROSS ? this.board[cell] = 'crossed' : this.board[cell] = 'noughted';
+    this.checkCombination();
+  }
+
+  checkCombination() {
+    const boardStateArr = Object.values(this.board);
+    COMBINATIONS.forEach((combination) => {
+      const arrayToCheck = [];
+      combination.forEach((cell) => {
+        arrayToCheck.push(this.board[cell]);
+        if (arrayToCheck.length > 2 && arrayToCheck.every((cellValue, i, arr) => cellValue === arr[0] && cellValue !== null)) {
+          this.turn === TURN_STATE.CROSS ? this.gameFinished.emit(RESULT.CROSS) : this.gameFinished.emit(RESULT.NOUGHT);
+          this.isGameFinished = true;
+        }
+      });
     });
-  }
-
-  shot(cell) {
-    if (this.isFirstPlayerTurn) {
-      this.emitShot(cell, 'crossed');
-    } else {
-      this.emitShot(cell, 'noughted');
+    if (!boardStateArr.includes(null) && !this.isGameFinished) {
+      this.isGameFinished = true;
+      this.gameFinished.emit(RESULT.DRAW);
     }
   }
 }

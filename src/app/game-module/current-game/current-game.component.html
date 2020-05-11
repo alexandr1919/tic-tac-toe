@@ -1,9 +1,9 @@
 <section class="wrapper">
-  <div class="field" [ngClass]="{'game-finished': isWinnerShown}">
+  <div class="field" [ngClass]="{'game-finished': isGameFinished}">
     <div
-      *ngFor="let cell of boardValues; let i = index"
+      *ngFor="let cell of boardAsArray; let i = index"
       class="cell cell--{{i + 1}}"
-      [ngClass]="boardValues[i] === 'empty' ? '' : boardValues[i]"
-      (click)="shot(i)"></div>
+      [ngClass]="boardAsArray[i] === 'empty' ? '' : boardAsArray[i]"
+      (click)="attempt(i)"></div>
   </div>
 </section>

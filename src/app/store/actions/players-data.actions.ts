@@ -1,3 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-export const startGame = createAction('[Start-game Component] Start game', props<{firstPlayerName: string; secondPlayerName: string}>());
+import { State as PlayersDataState } from '../reducers/players-data.reducer';
+
+export const setPlayersData = createAction('[Players data] Set Data', props<PlayersDataState>());

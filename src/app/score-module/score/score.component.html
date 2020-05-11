@@ -1,9 +1,13 @@
 <section class="score-block">
-  <div class="score-wrapper">
+  <div class="score-wrapper" [ngClass]="{
+    active: isFirstPlayerTurn && !gameState.isGameFinished
+  }">
     <span class="player-name">{{playersData.firstPlayer.name}}</span>
     <span class="player-score">{{playersData.firstPlayer.score}}</span>
   </div>
-  <div class="score-wrapper">
+  <div class="score-wrapper" [ngClass]="{
+    active: !isFirstPlayerTurn && !gameState.isGameFinished
+  }">
     <span class="player-name">{{playersData.secondPlayer.name}}</span>
     <span class="player-score">{{playersData.secondPlayer.score}}</span>
   </div>

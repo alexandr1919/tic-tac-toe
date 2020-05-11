@@ -4,10 +4,10 @@
   </svg>
 </a>
 <app-score
-  *ngIf="isOngoingGame$ | async"
+  *ngIf="!isStartScreen"
   [playersData]="playersData$ | async"
+  [gameState]="gameState"
 ></app-score>
 <app-game
-  [isOngoingGame]="isOngoingGame$ | async"
   [playersData]="playersData$ | async"
 ></app-game>

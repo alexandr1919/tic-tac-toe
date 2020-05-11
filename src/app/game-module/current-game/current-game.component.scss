@@ -1,3 +1,5 @@
+@import "../../../assets/_variables";
+
 .field {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +10,7 @@
 
 .cell {
   position: relative;
-  flex-basis: 33%;
+  flex-basis: 32%;
   padding: 50px 0;
   &--1 {
     border-bottom: 2px solid #000;
@@ -53,7 +55,7 @@
     width: 40px;
     height: 10px;
     transform: rotate(45deg) skew(6deg);
-    background-color: green;
+    background-color: $greenColor;
   }
   &:after {
     top: 47%;
@@ -64,7 +66,7 @@
     width: 40px;
     height: 10px;
     transform: rotate(-45deg) skew(6deg);
-    background-color: green;
+    background-color: $greenColor;
   }
   &:hover {
     background-color: transparent;
@@ -80,7 +82,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 10px solid red;
+    border: 10px solid $redColor;
     border-radius: 100%;
     transform: skew(6deg);
   }

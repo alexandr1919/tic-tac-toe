@@ -1,30 +1,23 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
-import * as fromRoot from '../../app.reducer';
+import { RESULT } from '../../shared/util';
 
 @Component({
   selector: 'app-finish-game',
   templateUrl: './finish-game.component.html',
   styleUrls: ['./finish-game.component.scss']
 })
-export class FinishGameComponent implements OnInit, OnChanges {
+export class FinishGameComponent implements OnChanges {
   @Input() outcome: string;
-
-  constructor(private store: Store<fromRoot.State> ) { }
-
-  ngOnInit() {
-  }
+  @Output() newGameStarted = new EventEmitter<any>();
+  isDraw: boolean;
 
   ngOnChanges() {
-    console.log(this.outcome)
+    this.isDraw = this.outcome === RESULT.DRAW;
   }
 
   startNewGame() {
-  }
-
-  resetScore() {
-
+    this.newGameStarted.emit();
   }
 
 }
