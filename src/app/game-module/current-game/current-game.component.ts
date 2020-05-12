@@ -29,9 +29,9 @@ export class CurrentGameComponent implements DoCheck {
 
   checkCombination() {
     const boardStateArr = Object.values(this.board);
-    COMBINATIONS.forEach((combination) => {
+    COMBINATIONS.forEach(combination => {
       const arrayToCheck = [];
-      combination.forEach((cell) => {
+      combination.forEach(cell => {
         arrayToCheck.push(this.board[cell]);
         if (arrayToCheck.length > 2 && arrayToCheck.every((cellValue, i, arr) => cellValue === arr[0] && cellValue !== null)) {
           this.turn === TURN_STATE.CROSS ? this.gameFinished.emit(RESULT.CROSS) : this.gameFinished.emit(RESULT.NOUGHT);
